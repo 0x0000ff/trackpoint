@@ -9,8 +9,8 @@ def get_setting(tf):
 
 def set_setting(tf, ts):
     f = open(tf, "r+")
-    f.write()
+    f.write(ts)
     f.close()
 
-#set_speed(tf, 30)
+set_setting(trackpointpath + "speed", "30")
 print("speed = ", get_setting(trackpointpath + "speed"))
