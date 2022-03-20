@@ -2,8 +2,8 @@ import configparser
 Config=configparser.ConfigParser()
 
 tp_path="/sys/devices/platform/i8042/serio1/driver/serio2/"
-tp_labels = ["sensitivity", "speed", "inertia", "reach", "draghys", \
-    "mindrag", "thresh", "upthresh", "ztime", "jenks", "press_to_select", \
+tp_labels = ["sensitivity", "speed", "press_to_select", "inertia", "reach", "draghys", \
+    "mindrag", "thresh", "upthresh", "ztime", "jenks", \
         "skipback", "ext_dev"]
 
 def get_setting(tf):
@@ -35,4 +35,3 @@ def retrieve_config_settings():
     return (tp_values)
 
 store_default_settings() 
-#print (retrieve_config_settings())
