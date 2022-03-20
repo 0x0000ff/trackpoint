@@ -1,5 +1,5 @@
-SENSITIVITY, SPEED, INERTIA, REACH, DRAGHYS, MINDRAG, THRESH, UPTHRESH, \
-    ZTIME, JENKS, PRESS_TO_SELECT, SKIPBACK, EXT_DEV = \
+SENSITIVITY, SPEED, PRESS_TO_SELECT, INERTIA, REACH, DRAGHYS, MINDRAG, THRESH, UPTHRESH, \
+    ZTIME, JENKS, SKIPBACK, EXT_DEV = \
     "Sensitivity.", \
     "Cursor speed.", \
     "Described as \"negative inertia.\" It acts more like friction. High" \
