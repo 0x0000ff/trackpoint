@@ -1,1 +1,1 @@
-KERNEL=="serio2", ACTION=="add", RUN+="/bin/echo something > /dev/ttyprintk" 
+KERNEL=="serio2", ACTION=="add", MODE="666"
