@@ -1,4 +1,5 @@
 import configparser
+import string
 Config=configparser.ConfigParser()
 
 
@@ -18,9 +19,9 @@ def get_setting(tf):
     f.close()
     return r.replace('\n', '')
 
-def set_setting(tf, ts):
-    f = open(tf, "r+")
-    f.write(ts)
+def set_setting(tpFilename, tpValue):
+    f = open(tpFilename, "r+")
+    f.write(str(tpValue))
     f.close()
 
 def store_default_settings():

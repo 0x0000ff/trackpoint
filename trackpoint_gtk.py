@@ -71,14 +71,19 @@ class MyWindow(Gtk.Window):
             self.resize(400,100)
 
     def on_apply_clicked(self,widget):
-        print ("fuck")
         for count, item in enumerate(trackpoint.tp_labels):
             print (self.Widgets[count*2+1].get_name())
             if (self.Widgets[count*2+1].get_name() == "GtkScale"):
                 print (self.Widgets[count*2+1].get_value())
-                trackpoint.store_changed_settings(trackpoint.tp_labels[count] [0], str(int(self.Widgets[count*2+1].get_value())))
+                trackpoint.set_setting(trackpoint.tp_path + trackpoint.tp_labels[count] [0],\
+                     str(int(self.Widgets[count*2+1].get_value())))
+                trackpoint.store_changed_settings(trackpoint.tp_labels[count] [0],\
+                     str(int(self.Widgets[count*2+1].get_value())))
             if (self.Widgets[count*2+1].get_name() == "GtkCheckButton"):
-                trackpoint.store_changed_settings(trackpoint.tp_labels[count] [0], ((str(int(self.Widgets[count*2+1].get_active())))))
+                trackpoint.set_setting(trackpoint.tp_path + trackpoint.tp_labels[count] [0],\
+                     str(int(self.Widgets[count*2+1].get_value())))
+                trackpoint.store_changed_settings(trackpoint.tp_labels[count] [0],\
+                     ((str(int(self.Widgets[count*2+1].get_active())))))
     
     def on_scale_draw(self,widget,something):
             widget.set_value(200)

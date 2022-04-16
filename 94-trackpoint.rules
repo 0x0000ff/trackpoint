@@ -1,1 +1,1 @@
-KERNEL=="serio2", ACTION=="add", MODE="666"
+KERNEL=="serio2", PROGRAM=="/bin/chmod -R 777 /sys/devices/platform/i8042/serio1/driver/serio2/"
