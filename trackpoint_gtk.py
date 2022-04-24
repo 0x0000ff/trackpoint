@@ -8,6 +8,7 @@ tp_values=trackpoint.retrieve_config_settings()
 
 class MyWindow(Gtk.Window):
     def __init__(self) -> None:
+        self.rowSkip = 0
         super().__init__(title="Trackpoint Settings")
         self.Box1 = Gtk.VBox(spacing=6)
         self.add(self.Box1)
@@ -22,27 +23,36 @@ class MyWindow(Gtk.Window):
         
         self.Widgets = []
         for count, item in enumerate(trackpoint.tp_labels):
-            WidgetHolder = Gtk.Label.new(item[0])
-            self.Widgets.append(WidgetHolder)
             if (item[1] == trackpoint.scale):
+                WidgetHolder = Gtk.Label.new(item[0])
+                self.Widgets.append(WidgetHolder)
                 WidgetHolder = Gtk.Scale.new_with_range(0,0,item[2],1)
                 WidgetHolder.set_round_digits(1)
                 WidgetHolder.set_value(float(tp_values[count]))
-                WidgetHolder.set_valign(4)
             if (item[1] == trackpoint.checkbutton):
-                WidgetHolder = Gtk.CheckButton.new()
+                WidgetHolder = Gtk.CheckButton.new_with_label(item[0])
+                WidgetHolder.set_halign(Gtk.Align.CENTER)
             self.Widgets.append(WidgetHolder)
 
-            y_more = 0
-            x_more = 0
+        nextColumn= 0
+        nextRow = 0
         for count, item in enumerate(self.Widgets):
-            if (count > 12):
-               y_more = 2 
-               x_more = 12
-            if (count % 2 == 0):
-                self.Grid1.attach(item, 1+y_more, count-x_more, 1, 1) 
-            if (count % 2 != 0):
-                self.Grid1.attach(item, 2+y_more, count-x_more, 1, 1) 
+            if (count + self.rowSkip >= 12):
+               nextColumn = 2 
+               nextRow = 11
+            if ((count + self.rowSkip) % 2 == 0):
+                if (item.get_name() == "GtkCheckButton"):
+                    self.Grid1.attach(item, nextColumn, count-nextRow, 1, 1) 
+                    self.rowSkip += 1
+                else:
+                    self.Grid1.attach(item, nextColumn, count-nextRow, 1, 1) 
+            print (count+self.rowSkip , ",", count-nextRow)
+            print (self.rowSkip)
+            if ((self.rowSkip + count) % 2 != 0):
+                self.Grid1.attach(item, nextColumn+1, count-nextRow-1, 1, 1) 
+            print (count-nextRow)
+            
+
 
         self.DefaultButton = Gtk.Button(label="Default")
         self.ButtonBox.pack_start(self.DefaultButton, False, False, 0)
@@ -61,13 +71,15 @@ class MyWindow(Gtk.Window):
     def on_advanced_clicked(self,widget):
         if (widget.get_label() != "Advanced <<"):
             widget.set_label("Advanced <<")
-            for i in range(6, 25):
-                win.show_all()
+            win.show_all()
+            for count, item in enumerate (self.Widgets):
+                print (count)
             self.resize(700,250)
         else:
             widget.set_label("Advanced >>")
-            for i in range(6, 25):
-                self.Widgets[i].hide()
+            for count, item in enumerate (self.Widgets):
+                if (count > 4):
+                    item.hide()
             self.resize(400,100)
 
     def on_apply_clicked(self,widget):
@@ -91,8 +103,8 @@ class MyWindow(Gtk.Window):
     def initial_show(self):
         win.show_all()
         for count, item in enumerate (self.Widgets):
-            if (count > 5):
-                self.Widgets[count].hide()
+            if (count > 4):
+                item.hide()
         self.resize(200,50)
 
 win = MyWindow()

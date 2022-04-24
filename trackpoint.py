@@ -11,7 +11,6 @@ tp_labels = ["sensitivity", scale, 128],\
     ["inertia", scale, 254], ["reach", scale, 254], ["draghys", scale, 254], \
     ["mindrag", scale, 254], ["thresh", scale, 254], ["upthresh", scale, 254], ["ztime", scale, 254],\
     ["jenks", scale, 254], ["skipback", checkbutton, 1], ["ext_dev", checkbutton, 1], 
-print (tp_labels[1] [2])
 
 def get_setting(tf):
     f = open(tf, "rt",newline='\n')
@@ -30,7 +29,6 @@ def store_default_settings():
         if (Config.has_option('DEFAULT', i[0]) == False \
                 or Config ['DEFAULT'] [i[0]] == ''):
             Config['DEFAULT'] [i[0]] = get_setting(tp_path + i[0])
-        print (i[0])
     with open('trackpoint.conf', 'w') as configfile:
         Config.write(configfile)
 
@@ -46,5 +44,3 @@ def retrieve_config_settings():
     for i in tp_labels:
         tp_values.append(Config ['DEFAULT'] [i[0]])     
     return (tp_values)
-
-#store_default_settings() 
