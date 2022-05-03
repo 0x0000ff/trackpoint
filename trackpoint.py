@@ -32,6 +32,16 @@ def store_default_settings():
     with open('trackpoint.conf', 'w') as configfile:
         Config.write(configfile)
 
+def store_current_settings():
+    Config.read('trackpoint.conf')
+    if (Config.has_section('CURRENT')) == False :
+        Config.add_section('CURRENT')
+    for i in tp_labels:
+        Config['CURRENT'] [i[0]] = get_setting(tp_path + i[0])
+        with open('trackpoint.conf', 'w') as configfile:
+            Config.write(configfile)
+
+
 def store_changed_settings(option, preference):
     Config.read('trackpoint.conf')
     Config['DEFAULT'] [option] = preference
@@ -44,3 +54,6 @@ def retrieve_config_settings():
     for i in tp_labels:
         tp_values.append(Config ['DEFAULT'] [i[0]])     
     return (tp_values)
+
+set_setting(tp_path+tp_labels[0] [0], 120)
+store_current_settings()

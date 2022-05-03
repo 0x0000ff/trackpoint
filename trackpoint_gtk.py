@@ -82,20 +82,30 @@ class MyWindow(Gtk.Window):
                     item.hide()
             self.resize(400,100)
 
-    def on_apply_clicked(self,widget):
+    def on_apply_clicked_old(self,widget):
+        applySkip=0
+        print (len(self.Widgets))
         for count, item in enumerate(trackpoint.tp_labels):
+            if count*2+1 > len(self.Widgets):
+                break
+            print (count * 2+1)
             print (self.Widgets[count*2+1].get_name())
-            if (self.Widgets[count*2+1].get_name() == "GtkScale"):
-                print (self.Widgets[count*2+1].get_value())
-                trackpoint.set_setting(trackpoint.tp_path + trackpoint.tp_labels[count] [0],\
-                     str(int(self.Widgets[count*2+1].get_value())))
-                trackpoint.store_changed_settings(trackpoint.tp_labels[count] [0],\
-                     str(int(self.Widgets[count*2+1].get_value())))
-            if (self.Widgets[count*2+1].get_name() == "GtkCheckButton"):
-                trackpoint.set_setting(trackpoint.tp_path + trackpoint.tp_labels[count] [0],\
-                     str(int(self.Widgets[count*2+1].get_value())))
-                trackpoint.store_changed_settings(trackpoint.tp_labels[count] [0],\
-                     ((str(int(self.Widgets[count*2+1].get_active())))))
+
+    def on_apply_clicked(self,widget):
+        valueCount = 0
+        print (len(self.Widgets))
+        for item in self.Widgets:
+            if (item.get_name() == "GtkCheckButton"):
+                trackpoint.set_setting(trackpoint.tp_path + trackpoint.tp_labels[valueCount] [0], \
+                    int(item.get_active()))
+                valueCount += 1
+                print (valueCount)
+            if (item.get_name() == "GtkScale"):
+                trackpoint.set_setting(trackpoint.tp_path + trackpoint.tp_labels[valueCount] [0], \
+                    int(item.get_value()))
+                valueCount +=1
+                print (valueCount)
+        trackpoint.store_current_settings()
     
     def on_scale_draw(self,widget,something):
             widget.set_value(200)
