@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Trackpoint Settings Initialization
+Exec=python3 -c "import trackpoint; trackpoint.apply_stored_settings('CURRENT')"

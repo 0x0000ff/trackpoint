@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Trackpoint Settings
+Exec=trackpoint_gtk.py

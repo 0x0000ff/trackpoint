@@ -1,9 +1,10 @@
 import configparser
 import string
+import os
 Config=configparser.ConfigParser()
 
-
 tp_path="/sys/devices/platform/i8042/serio1/driver/serio2/"
+tp_config_path=os.environ.get('HOME')+"/.config/trackpoint.conf"
 scale = 1
 checkbutton = 2
 tp_labels = ["sensitivity", scale, 128],\
@@ -24,36 +25,45 @@ def set_setting(tpFilename, tpValue):
     f.close()
 
 def store_default_settings():
-    Config.read('trackpoint.conf')
+    Config.read(tp_config_path)
     for i in tp_labels:
         if (Config.has_option('DEFAULT', i[0]) == False \
                 or Config ['DEFAULT'] [i[0]] == ''):
             Config['DEFAULT'] [i[0]] = get_setting(tp_path + i[0])
-    with open('trackpoint.conf', 'w') as configfile:
+    with open(tp_config_path, 'w') as configfile:
         Config.write(configfile)
 
 def store_current_settings():
-    Config.read('trackpoint.conf')
+    Config.read(tp_config_path)
     if (Config.has_section('CURRENT')) == False :
         Config.add_section('CURRENT')
     for i in tp_labels:
         Config['CURRENT'] [i[0]] = get_setting(tp_path + i[0])
-        with open('trackpoint.conf', 'w') as configfile:
+        with open(tp_config_path, 'w') as configfile:
             Config.write(configfile)
 
 
 def store_changed_settings(option, preference):
-    Config.read('trackpoint.conf')
+    Config.read(tp_config_path)
     Config['DEFAULT'] [option] = preference
-    with open('trackpoint.conf', 'w') as configfile:
+    with open(tp_config_path, 'w') as configfile:
         Config.write(configfile)
 
-def retrieve_config_settings():
-    Config.read('trackpoint.conf')
+def retrieve_config_settings(section):
+    Config.read(tp_config_path)
     tp_values = []
-    for i in tp_labels:
-        tp_values.append(Config ['DEFAULT'] [i[0]])     
+    if Config.has_section('DEFAULT') == False:
+        store_default_settings()
+    if Config.has_section('CURRENT') == False:
+        for i in tp_labels:
+            tp_values.append(Config ['DEFAULT'] [i[0]])     
+    else:
+        for i in tp_labels:
+            tp_values.append(Config[section] [i[0]])
     return (tp_values)
 
-set_setting(tp_path+tp_labels[0] [0], 120)
-store_current_settings()
+
+def apply_stored_settings(section):
+    tp_values=retrieve_config_settings(section)
+    for count, item in enumerate(tp_labels):
+        set_setting(tp_path+item[0], str(tp_values[count])) 
