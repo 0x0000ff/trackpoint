@@ -66,7 +66,6 @@ class MyWindow(Gtk.Window):
         if (widget.get_label() != "Advanced <<"):
             widget.set_label("Advanced <<")
             win.show_all()
-            for count, item in enumerate (self.Widgets):
             self.resize(700,250)
         else:
             widget.set_label("Advanced >>")
