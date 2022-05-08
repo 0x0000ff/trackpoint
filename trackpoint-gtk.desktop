@@ -1,4 +1,5 @@
 [Desktop Entry]
 Type=Application
+Categories=Utility;
 Name=Trackpoint Settings
-Exec=trackpoint_gtk
+Exec=/usr/bin/trackpoint-gtk
