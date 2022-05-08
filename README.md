@@ -1,6 +1,8 @@
 # trackpoint
 Build for use with my Thinkpad T440p, but maybe it can be used with other laptops with a Synaptics trackpoint. Made to work with newer Linux systems
 
+Software is in very early stages. Use with caution.
+
 ## Install
 
 ```sh

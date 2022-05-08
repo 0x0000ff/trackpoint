@@ -11,4 +11,5 @@ uninstall:
 	rm /usr/bin/trackpoint-gtk
 	rm /etc/xdg/autostart/trackpoint-autostart.desktop
 	rm /etc/udev/rules.d/94-trackpoint.rules
-	rm trackpoint-gtk.desktop /usr/share/applications
+	rm /usr/share/applications/trackpoint-gtk.desktop
+	groupdel trackpoint
